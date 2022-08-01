@@ -1,5 +1,7 @@
 /* File System module */
 
+// 小檔案適用
+
 const fs = require('fs')
 
 /* 1. reading files */
