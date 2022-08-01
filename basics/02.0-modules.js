@@ -27,3 +27,10 @@ const { people, ages } = require('./02.1-people')
 
 console.log(people) // [ 'Pamcy', 'Adai', 'Ami', 'Amiao' ]
 console.log(ages) // [ '30', '45', '4', '3' ]
+
+/* node js 內建的核心 module */
+// operating system
+const os = require('os')
+
+console.log(os.platform()) // linux
+console.log(os.homedir()) // /home/gitpod
