@@ -14,6 +14,7 @@ console.log(family)
 // {} : 如果 people.js 裡沒有 export，這裡會印出 empty object
 // [ 'Pamcy', 'Adai', 'Ami', 'Amiao' ] : 這是 people.js 裡 module.exports 紙後，family 印出來的值
 
+
 // 2. for many exports
 // result:
 
@@ -21,6 +22,7 @@ console.log(family)
 //     people: [ 'Pamcy', 'Adai', 'Ami', 'Amiao' ],
 //     ages: [ '30', '45', '4', '3' ]
 // }
+
 
 // 直接 destructuring 取出值用
 const { people, ages } = require('./02.1-people')
