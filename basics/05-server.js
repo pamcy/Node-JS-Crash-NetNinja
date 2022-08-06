@@ -35,7 +35,20 @@ const server = http.createServer((req, res) => {
     // 打開 localhost:3000
     // 每一次打開網頁或 refresh，就會和 server request 網頁，log 就會出現
 
-    console.log('request made');
+    console.log('request made')
+    // console.log(req.url); 
+    // 回傳 root url of the website ex. 進到首頁回傳 /，進到 about 頁面回傳 /about
+    
+    // console.log(req.method); 
+    // GET
+
+    // 1. set the content type to the browser
+    res.setHeader('Content-Type', 'text/html')
+    // 2. set the content to the browser
+    res.write('<h1>Hallo Folks</h1>')
+    res.write('<p>What a wonderful day!</p>')
+    // 3. end the response and send it to the browser
+    res.end()
 })
 
 
