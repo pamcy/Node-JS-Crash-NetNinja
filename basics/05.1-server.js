@@ -4,7 +4,7 @@
 // describe the type of response sent to the browser
 
 // 200 - OK
-// 301 - Resource moved
+// 301 - Resource moved permanently
 // 404 - Not found
 // 500 - Internal server error
 
@@ -31,6 +31,13 @@ const server = http.createServer((req, res) => {
         case '/about':
             path += 'about.html'
             res.statusCode = 200
+            break
+        case '/about-me':
+            res.statusCode = 301
+            // 連進 /about me 要自動轉址到 /about
+            // The Location response header indicates the URL to redirect a page to.
+            res.setHeader('Location', '/about')
+            res.end()
             break
         default:
             path += '404.html'
