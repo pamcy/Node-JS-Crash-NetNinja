@@ -20,7 +20,7 @@ const fs = require('fs')
 const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/html')
 
-    let path = 'basics/views/'
+    let path = 'views/'
 
     // 打開 browser devtool 'network' tab 看 status code 狀態
     switch (req.url) {
