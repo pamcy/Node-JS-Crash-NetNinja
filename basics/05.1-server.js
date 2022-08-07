@@ -1,24 +1,40 @@
 /* Create a server */
 
+/* Status codes */
+// describe the type of response sent to the browser
+
+// 200 - OK
+// 301 - Resource moved
+// 404 - Not found
+// 500 - Internal server error
+
+// 100 range - informational response
+// 200 range - success codes
+// 300 range - codes for redirects
+// 400 range - user or client error codes
+// 500 range - server error codes
+
 const http = require('http')
 const fs = require('fs')
 
 const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/html')
 
-    console.log(req)
-
     let path = 'basics/views/'
 
+    // 打開 browser devtool 'network' tab 看 status code 狀態
     switch (req.url) {
         case '/':
             path += 'index.html'
+            res.statusCode = 200
             break;
         case '/about':
             path += 'about.html'
+            res.statusCode = 200
             break
         default:
             path += '404.html'
+            res.statusCode = 404
     }
 
     fs.readFile(path, (err, data) => {
