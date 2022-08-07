@@ -1,0 +1,22 @@
+{
+  "name": "node-js-crash-netninja",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pamcy/Node-JS-Crash-NetNinja.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pamcy/Node-JS-Crash-NetNinja/issues"
+  },
+  "homepage": "https://github.com/pamcy/Node-JS-Crash-NetNinja#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
