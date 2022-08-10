@@ -29,5 +29,20 @@ app.get('/about', (req, res) => {
     })
 })
 
+// redirects
+app.get('/about-us', (req, res) => {
+    res.redirect('/about')
+})
+
+// 404 page
+// use method: create a middleware and fire the middleware function 
+// 一定要放在最底下，node 會依序由上而下執行，有符合條件的 routing function 就會執行 response 然後停止，沒有符合就會一直往下繼續跑
+// 走到最後都沒有符合，就回傳 404 html，node 會以為 status 是 200 成功，需另外設定 status = 400
+app.use((req, res) => {
+    res.status(404).sendFile('./views/404.html', {
+        root: __dirname
+    })
+})
+
 // 開啟 server port 3000
 app.listen(3000)
