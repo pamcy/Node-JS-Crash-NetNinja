@@ -10,23 +10,31 @@ const app = express()
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-    res.render('index')
+    // Server side rendering
+    // 原本只是 EJS template 存在 server，browser 看不懂，在 server 端時會由 EJS view engine 加工處理，
+    // 將動態資料寫入、邏輯、和其他...處理完後，再轉成 html 回傳到前端
+    // 這個過程就叫 server side rendering
+
+    const blogs = [
+        {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+        {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+        {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+    ];
+
+    // pass data 'title' and 'blogs' into views
+    res.render('index', { title: 'Home', blogs })
 })
 
 app.get('/about', (req, res) => {
-    res.sendFile('./views/about.html', {
-        root: __dirname
-    })
+    res.render('about', { title: 'About' })
 })
 
-app.get('/about-us', (req, res) => {
-    res.redirect('/about')
+app.get('/blogs/create', (req, res) => {
+    res.render('create', { title: 'Create blog' })
 })
 
 app.use((req, res) => {
-    res.status(404).sendFile('./views/404.html', {
-        root: __dirname
-    })
+    res.status(404).render('404', { title: '404' })
 })
 
 app.listen(3000)
