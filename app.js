@@ -55,6 +55,17 @@ app.set('view engine', 'ejs')
 // Create a new morgan logger middleware function using the given format and options. 
 app.use(morgan('dev'))
 
+
+
+// Express static files middleware
+// express.static(root, [options])
+// serve images, CSS files, and JavaScript files in a directory named public
+// The root argument specifies the root directory from which to serve static asset
+// server 預設會保護所有檔案不被外部連結，所以需要另外開啟那些檔案可以外連
+app.use(express.static('public'))
+
+
+
 app.get('/', (req, res) => {
     // Server side rendering
     // 原本只是 EJS template 存在 server，browser 看不懂，在 server 端時會由 EJS view engine 加工處理，
