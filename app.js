@@ -23,6 +23,7 @@
 
 // ----- BEGIN THE CODE ------ 
 const express = require('express')
+const morgan = require('morgan')
 
 const app = express()
 
@@ -30,19 +31,29 @@ const app = express()
 // 如果目錄結構使用資料夾 'views'，預設會自動讀取 'views' 底下的檔案
 app.set('view engine', 'ejs')
 
+
 // custom middleware example 1
 // call app.use(), specifying the middleware function
-app.use((req, res, next) => {
-    console.log('new request made')
-    console.log('host:', req.hostname)
-    console.log('path:', req.path)
-    console.log('method:', req.method)
+// app.use((req, res, next) => {
+//     console.log('new request made')
+//     console.log('host:', req.hostname)
+//     console.log('path:', req.path)
+//     console.log('method:', req.method)
 
-    // 打開 browser 後，log 會看到這些 log message，但網頁會 hang 在那裡，沒有顯示網頁內容
-    // node middleware 不知道接下來該做什麼事，就 hang 在那裡不動
-    // 所以要加 next 繼續執行
-    next()
-})
+//     // 打開 browser 後，log 會看到這些 log message，但網頁會 hang 在那裡，沒有顯示網頁內容
+//     // node middleware 不知道接下來該做什麼事，就 hang 在那裡不動
+//     // 所以要加 next 繼續執行
+//     next()
+// })
+
+
+// 使用第三方 middleware 插件
+// 別人都幫你寫好所有繁複的細節了
+
+// Morgan
+// a HTTP request logger middleware for node.js
+// Create a new morgan logger middleware function using the given format and options. 
+app.use(morgan('dev'))
 
 app.get('/', (req, res) => {
     // Server side rendering
@@ -63,10 +74,10 @@ app.get('/', (req, res) => {
 // custom middleware example 2
 // 如果 request url 是首頁，這段 middleware 就不會被執行
 // 因為 respone 就會回傳首頁內容後就停止
-app.use((req, res, next)=> {
-    console.log('the next middleware');
-    next()
-})
+// app.use((req, res, next)=> {
+//     console.log('the next middleware');
+//     next()
+// })
 
 app.get('/about', (req, res) => {
     res.render('about', { title: 'About' })
