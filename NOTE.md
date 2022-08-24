@@ -46,3 +46,6 @@
         - model allow us to communicate with database collections
         - create a blog model based on the blog schama, blog model will then have static and instance methods(ex. get, save, delete, etc....), which we can use to save, update or read data from the blog's collection
 
+- 相關文件
+    - [Express Tutorial Part 3: Using a Database (with Mongoose) - MDN](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose)
+

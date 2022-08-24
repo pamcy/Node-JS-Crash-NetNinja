@@ -1,11 +1,13 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const morgan = require('morgan')
+const Blog = require('./models/blog')
 
 const app = express()
 
 // connect to db
-const dbURI = 'mongodb+srv://fettbauch:WkmQpBOU5w2mbTVA@tutorial.hvhtz8a.mongodb.net/?retryWrites=true&w=majority'
+// database name: personal-website (I have created in mongoDB)
+const dbURI = 'mongodb+srv://fettbauch:WkmQpBOU5w2mbTVA@tutorial.hvhtz8a.mongodb.net/personal-website?retryWrites=true&w=majority'
 
 mongoose.connect(dbURI)
     // 等成功連上 DB 後再開啟 server
@@ -20,6 +22,34 @@ app.set('view engine', 'ejs')
 // middleware & static files
 app.use(express.static('public'))
 app.use(morgan('dev'))
+
+app.get('/add-blog', (req, res) => {
+    // create a new Blog instance use the Blog model
+    const blog = new Blog({
+        title: 'What a day!',
+        snippet: 'I do not know what to say about....',
+        body: 'It is just all about blah blah blah, ha ha ha!'
+    })
+
+    // save this document by inserting a new document into the database
+    blog.save()
+        .then(result => {
+            res.send(result)
+            // 頁面上會看到這個 result
+            // {
+            //     title: "What a day!",
+            //     snippet: "I do not know what to say about....",
+            //     body: "It is just all about blah blah blah, ha ha ha!",
+            //     _id: "630573f170ee315b876e24b9",
+            //     createdAt: "2022-08-24T00:42:25.978Z",
+            //     updatedAt: "2022-08-24T00:42:25.978Z",
+            //     __v: 0
+            // }
+        })
+        .catch(err => {
+            console.error(err);
+        })
+})
 
 app.get('/', (req, res) => {
     // Server side rendering
@@ -48,3 +78,10 @@ app.get('/blogs/create', (req, res) => {
 app.use((req, res) => {
     res.status(404).render('404', { title: '404' })
 })
+
+
+
+
+// 備註：
+// get current ip of Gitpod in terminal for accessing to mongoDB
+// curl ifconfig.me
