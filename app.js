@@ -23,66 +23,6 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(morgan('dev'))
 
-
-
-// BEGINN: GETTING & SAVING DATA DEMO
-app.get('/add-blog', (req, res) => {
-    // create a new Blog instance use the Blog model
-    const blog = new Blog({
-        title: 'What a day',
-        snippet: 'I do not know what to say about....',
-        body: 'It is just all about blah blah blah, ha ha ha!'
-    })
-
-    // an instance of a model is called a document. Creating them and saving to the database
-    // save this document by inserting a new document into the database
-    // 所以這裡的 blog 是小寫，instance of the blog
-    blog.save()
-        .then(result => {
-            res.send(result)
-            // 頁面上會看到這個 result
-            // {
-            //     title: "What a day!",
-            //     snippet: "I do not know what to say about....",
-            //     body: "It is just all about blah blah blah, ha ha ha!",
-            //     _id: "630573f170ee315b876e24b9",
-            //     createdAt: "2022-08-24T00:42:25.978Z",
-            //     updatedAt: "2022-08-24T00:42:25.978Z",
-            //     __v: 0
-            // }
-        })
-        .catch(err => {
-            console.error(err);
-        })
-})
-
-app.get('/all-blogs', (req, res) => {
-    // .find(): 回傳所有的 documents
-    // 這裡的 Blog 是大寫，直接從 Model 裡面找然後回傳
-    Blog.find()
-        .then(result => {
-            res.send(result)
-        })
-        .catch(err => {
-            console.error(err);
-        })
-})
-
-app.get('/single-blog', (req, res) => {
-    // finds a single document by its _id field.
-    // 存進 mongoDB 的 id 其實是一個 object，mongoose 有幫我們做處理，可以直接輸入 id string 就好
-    Blog.findById('630ac7e4dd4866803dbf3278')
-        .then(result => {
-            res.send(result)
-        })
-        .catch(err => {
-            console.error(err);
-        })
-})
-// END: GETTING & SAVING DATA DEMO
-
-
-
 // routes
 app.get('/', (req, res) => {
     res.redirect('/blogs')
@@ -117,10 +57,3 @@ app.get('/blogs/create', (req, res) => {
 app.use((req, res) => {
     res.status(404).render('404', { title: '404' })
 })
-
-
-
-
-// 備註：
-// get current ip of Gitpod in terminal for accessing to mongoDB
-// curl ifconfig.me
