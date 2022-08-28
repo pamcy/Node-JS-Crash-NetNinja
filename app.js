@@ -23,6 +23,9 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(morgan('dev'))
 
+
+
+// BEGINN: GETTING & SAVING DATA DEMO
 app.get('/add-blog', (req, res) => {
     // create a new Blog instance use the Blog model
     const blog = new Blog({
@@ -76,25 +79,35 @@ app.get('/single-blog', (req, res) => {
             console.error(err);
         })
 })
+// END: GETTING & SAVING DATA DEMO
 
+
+
+// routes
 app.get('/', (req, res) => {
+    res.redirect('/blogs')
+})
+
+app.get('/about', (req, res) => {
+    res.render('about', { title: 'About' })
+})
+
+// blog routes
+app.get('/blogs', (req, res) => {
     // Server side rendering
     // 原本只是 EJS template 存在 server，browser 看不懂，在 server 端時會由 EJS view engine 加工處理，
     // 將動態資料寫入、邏輯、和其他...處理完後，再轉成 html 回傳到前端
     // 這個過程就叫 server side rendering
 
-    const blogs = [
-        {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-        {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-        {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-    ];
-
-    // pass data 'title' and 'blogs' into views
-    res.render('index', { title: 'Home', blogs })
-})
-
-app.get('/about', (req, res) => {
-    res.render('about', { title: 'About' })
+    // sort: -1 (from newest to oldest)
+    Blog.find().sort({ createdAt: '-1' })
+        .then(result => {
+            // pass data 'title' and 'blogs' into views
+            res.render('index', {title: 'All Blogs', blogs: result })
+        })
+        .catch(err=> {
+            console.error(err);
+        })
 })
 
 app.get('/blogs/create', (req, res) => {
