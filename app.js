@@ -67,6 +67,19 @@ app.post('/blogs', (req, res) => {
         })
 })
 
+app.get('/blogs/:id', (req, res) => {
+    // :id 可以自己取任何適合的名字
+    const id = req.params.id;
+
+    Blog.findById(id)
+        .then(result => {
+            res.render('detail', { title: 'Blog details', blog: result })
+        })
+        .catch(err => {
+            console.error(err);
+        })
+})
+
 app.get('/about', (req, res) => {
     res.render('about', { title: 'About' })
 })
