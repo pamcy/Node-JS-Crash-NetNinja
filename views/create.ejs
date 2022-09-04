@@ -4,8 +4,13 @@
     <body>
         <%- include('./partials/nav') %>
 
+        <!-- 把 form 資料送出，有兩種方式： -->
+        <!-- 1. ajax post
+        2. form 本身內建的 post (這裡用這個)
+            - action: form 要送到哪裡的 url
+            - input attribute 一定要寫 name，server 才能讀取使用者填寫的內容 -->
         <div class="create-blog content">
-            <form>
+            <form action="/blogs" method="POST">
                 <label for="title">Blog title:</label>
                 <input type="text" id="title" name="title" required />
                 <label for="snippet">Blog snippet:</label>

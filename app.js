@@ -21,15 +21,12 @@ app.set('view engine', 'ejs')
 
 // middleware & static files
 app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true })) // a built-in middleware function in Express. 把使用者 post 的 form data，解析成像 object or json like format
 app.use(morgan('dev'))
 
 // routes
 app.get('/', (req, res) => {
     res.redirect('/blogs')
-})
-
-app.get('/about', (req, res) => {
-    res.render('about', { title: 'About' })
 })
 
 // blog routes
@@ -52,6 +49,26 @@ app.get('/blogs', (req, res) => {
 
 app.get('/blogs/create', (req, res) => {
     res.render('create', { title: 'Create blog' })
+})
+
+app.post('/blogs', (req, res) => {
+    // console.log(req.body); 
+    // { title: 'xxxxs', snippet: 'ssss', body: 'good to go!' }
+
+    // create a new Blog instance，把 form data 存進 db
+    const blog = new Blog(req.body)
+
+    blog.save()
+        .then((result) => {
+            res.redirect('/blogs')
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+})
+
+app.get('/about', (req, res) => {
+    res.render('about', { title: 'About' })
 })
 
 app.use((req, res) => {

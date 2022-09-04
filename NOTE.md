@@ -49,3 +49,18 @@
 - 相關文件
     - [Express Tutorial Part 3: Using a Database (with Mongoose) - MDN](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose)
 
+
+---
+**Post requests**
+- type
+    - GET: get all blogs
+        - localhost:3000/blogs
+    - POST: create a blog
+        - localhost:3000/blogs
+    - GET: get blog
+        - localhost:3000/blogs/:id
+    - DELETE: delete a blog
+        - localhost:3000/blogs/:id
+    - PUT: update a blog
+        - localhost:3000/blogs/:id
+- 同一個 request url 可以同時 type 是 GET or POST，不影響。
