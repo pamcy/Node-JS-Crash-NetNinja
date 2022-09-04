@@ -9,8 +9,37 @@
         <div class="content">
           <p><%= blog.body %></p>
         </div>
+        <a class="delete" data-id="<%= blog._id %>">
+            <img src="/trashcan.svg" alt="delete icon">
+        </a>
       </div>
 
       <%- include("./partials/footer.ejs") %>
+
+      <script>
+        const deleteBtn = document.querySelector('.delete')
+
+        deleteBtn.addEventListener('click', () => {
+            const endpoint = `/blogs/${deleteBtn.dataset.id}`
+
+            fetch(endpoint, {
+                method: 'DELETE'
+            })
+                .then((res) => res.json()) // // parses JSON response into native JavaScript objects
+                .then((data) => {
+                    if (data) {
+                        // console.log(data);
+                        // {
+                        //     redirect: '/blogs'
+                        // }
+
+                        window.location.href = data.redirect
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+        })
+      </script>
     </body>
 </html>

@@ -80,6 +80,20 @@ app.get('/blogs/:id', (req, res) => {
         })
 })
 
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id
+
+    Blog.findByIdAndDelete(id)
+        .then((result) => {
+            // 前端如果是用 ajax request，後端不能直接執行 redirect 轉址，通常一定是要回傳 json
+            // sends a JSON response
+            res.json({ redirect: '/blogs' })
+        })
+        .catch(err => {
+            console.error(err);
+        })
+})
+
 app.get('/about', (req, res) => {
     res.render('about', { title: 'About' })
 })
