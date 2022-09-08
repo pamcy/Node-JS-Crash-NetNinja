@@ -64,3 +64,15 @@
     - PUT: update a blog
         - localhost:3000/blogs/:id
 - 同一個 request url 可以同時 type 是 GET or POST，不影響。
+
+---
+**MVC**
+- basic knowledge:
+    - Model, View, Controller
+    - a way of structuring our code & files
+    - more modular, reusable, easier to maintain.
+
+- what is a controller?
+    - 有點像中間人（郵差），負責在 Model 和 View 之間傳遞任務
+    - use Model to get data, then pass the data to View
+
