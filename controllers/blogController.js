@@ -10,7 +10,7 @@ const blog_index = ((req, res) => {
     Blog.find().sort({ createdAt: '-1' })
         .then(result => {
             // pass data 'title' and 'blogs' into views
-            res.render('index', {title: 'All Blogs', blogs: result })
+            res.render('blogs/index', {title: 'All Blogs', blogs: result })
         })
         .catch(err=> {
             console.error(err);
@@ -18,7 +18,7 @@ const blog_index = ((req, res) => {
 })
 
 const blog_create_get = ((req, res) => {
-    res.render('create', { title: 'Create blog' })
+    res.render('blogs/create', { title: 'Create blog' })
 })
 
 const blog_create_post = ((req, res) => {
@@ -43,7 +43,7 @@ const blog_details = ((req, res) => {
 
     Blog.findById(id)
         .then(result => {
-            res.render('detail', { title: 'Blog details', blog: result })
+            res.render('blogs/detail', { title: 'Blog details', blog: result })
         })
         .catch(err => {
             console.error(err);
