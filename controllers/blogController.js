@@ -46,7 +46,8 @@ const blog_details = ((req, res) => {
             res.render('blogs/detail', { title: 'Blog details', blog: result })
         })
         .catch(err => {
-            console.error(err);
+            // 萬一輸入不存在的 blog id，網頁會一直 hang 在那裡
+            res.render('404', {title: 'Blog not found' })
         })
 })
 
