@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const morgan = require('morgan')
-const Blog = require('./models/blog')
+const blogRoutes = require('./routes/blogRoutes')
 
 const app = express()
 
@@ -30,69 +30,7 @@ app.get('/', (req, res) => {
 })
 
 // blog routes
-app.get('/blogs', (req, res) => {
-    // Server side rendering
-    // 原本只是 EJS template 存在 server，browser 看不懂，在 server 端時會由 EJS view engine 加工處理，
-    // 將動態資料寫入、邏輯、和其他...處理完後，再轉成 html 回傳到前端
-    // 這個過程就叫 server side rendering
-
-    // sort: -1 (from newest to oldest)
-    Blog.find().sort({ createdAt: '-1' })
-        .then(result => {
-            // pass data 'title' and 'blogs' into views
-            res.render('index', {title: 'All Blogs', blogs: result })
-        })
-        .catch(err=> {
-            console.error(err);
-        })
-})
-
-app.get('/blogs/create', (req, res) => {
-    res.render('create', { title: 'Create blog' })
-})
-
-app.post('/blogs', (req, res) => {
-    // console.log(req.body); 
-    // { title: 'xxxxs', snippet: 'ssss', body: 'good to go!' }
-
-    // create a new Blog instance，把 form data 存進 db
-    const blog = new Blog(req.body)
-
-    blog.save()
-        .then((result) => {
-            res.redirect('/blogs')
-        })
-        .catch((err) => {
-            console.error(err);
-        })
-})
-
-app.get('/blogs/:id', (req, res) => {
-    // :id 可以自己取任何適合的名字
-    const id = req.params.id;
-
-    Blog.findById(id)
-        .then(result => {
-            res.render('detail', { title: 'Blog details', blog: result })
-        })
-        .catch(err => {
-            console.error(err);
-        })
-})
-
-app.delete('/blogs/:id', (req, res) => {
-    const id = req.params.id
-
-    Blog.findByIdAndDelete(id)
-        .then((result) => {
-            // 前端如果是用 ajax request，後端不能直接執行 redirect 轉址，通常一定是要回傳 json
-            // sends a JSON response
-            res.json({ redirect: '/blogs' })
-        })
-        .catch(err => {
-            console.error(err);
-        })
-})
+app.use('/blogs', blogRoutes) // load the router middle in the app
 
 app.get('/about', (req, res) => {
     res.render('about', { title: 'About' })
